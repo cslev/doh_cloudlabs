@@ -81,3 +81,6 @@ ln -s $PWD/firefox/firefox /usr/lib/firefox/firefox
 mv source/others/bashrc_template /root/.bashrc
 source /root/.bashrc
 mkdir -p pcap
+mv source/*.py ./
+mv source/*.sh ./
+mv source/*.csv ./
