@@ -9,7 +9,7 @@ https://github.com/cslev/doh_cloudlabs
 """
 
 import geni.portal as portal
-import geni.rspec.pg as rspec
+import geni.rspec.pg as pg
 
 request = portal.context.makeRequestRSpec()
 
