@@ -22,6 +22,7 @@ doh_resolvers={'cloudflare':1}
 
 for key in doh_resolvers:
     node = request.DockerContainer(str(key))
-    node.docker_dockerfile = "https://raw.githubusercontent.com/cslev/doh_docker/master/Dockerfile.noautostart"
+    # node.docker_dockerfile = "https://raw.githubusercontent.com/cslev/doh_docker/master/Dockerfile.noautostart"
+    node.docker_extimage = "cslev/doh_docker:noautostart"
 
 portal.context.printRequestRSpec()
