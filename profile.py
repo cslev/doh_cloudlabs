@@ -23,6 +23,8 @@ doh_resolvers={'cloudflare':1}
 for key in doh_resolvers:
     node = request.DockerContainer(str(key))
     # node.docker_dockerfile = "https://raw.githubusercontent.com/cslev/doh_docker/master/Dockerfile.noautostart"
-    node.docker_extimage = "cslev/doh_docker:noautostart"
+    node.docker_extimage = "debian:bullseye"
+    #start doh_capture
+    node.addService(pg.Execute(shell="bash", command="/local/repository/cloudlabs_start.sh "+str(doh_resolvers[key])))
 
 portal.context.printRequestRSpec()

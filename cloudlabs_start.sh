@@ -61,24 +61,23 @@ echo -e "Installing requirements..."
 apt-get update
 apt-get install -y --no-install-recommends $DEPS
 apt-get install -y --no-install-recommends $PYTHON_DEPS
-dpkg -i sources/selenium/python3-urllib3_1.24.1.deb
-dpkg -i sources/selenium/python3-selenium_3.14.1.deb
+dpkg -i source/selenium/python3-urllib3_1.24.1.deb
+dpkg -i source/selenium/python3-selenium_3.14.1.deb
 apt-get autoremove --purge -y
 wget -q https://ftp.mozilla.org/pub/firefox/releases/74.0/linux-x86_64/en-US/firefox-74.0.tar.bz2
 tar -xjf firefox-74.0.tar.bz2
-tar -xzf geckodriver-v0.26.0-linux64.tar.gz
+tar -xzf source/geckodriver-v0.26.0-linux64.tar.gz
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 rm -rf selenium/
 rm -rf firefox-74.0.tar.bz2
 rm -rf geckodriver-v0.26.0-linux64.tar.gz
-chmod +x geckodriver
-chmod +x doh_capture.py
-chmod +x start_doh_capture.sh
-cp geckodriver /usr/bin
+chmod +x source/geckodriver
+chmod +x source/doh_capture.py
+chmod +x source/start_doh_capture.sh
+cp source/geckodriver /usr/bin
 mkdir -p /usr/lib/firefox
-ln -s /doh_project/firefox/firefox /usr/lib/firefox/firefox
-mv others/bashrc_template /root/.bashrc
+ln -s $PWD/firefox/firefox /usr/lib/firefox/firefox
+mv source/others/bashrc_template /root/.bashrc
 source /root/.bashrc
 mkdir -p pcap
-    
