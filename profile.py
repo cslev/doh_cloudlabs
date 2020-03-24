@@ -24,8 +24,8 @@ for key in doh_resolvers:
     node = request.DockerContainer(str(key))
     # node.docker_dockerfile = "https://raw.githubusercontent.com/cslev/doh_docker/master/Dockerfile.noautostart"
     # node.docker_extimage = "debian:bullseye"
-    node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops//docker-ubuntu18-std"
+    node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops//docker-debian9-std"
     #install all dependencies
-    node.addService(pg.Execute(shell="bash", command="/local/repository/cloudlabs_start.sh "+str(doh_resolvers[key])))
+    node.addService(pg.Execute(shell="bash", command="apt-get update && apt-get install git"))
 
 portal.context.printRequestRSpec()
