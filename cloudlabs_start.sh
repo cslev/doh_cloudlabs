@@ -28,6 +28,9 @@ lightcyan='\033[96m'
 function show_help
 {
   echo -e "${green}Example:./cloudlas_start.sh -r <RESOLER> ${none}"
+  echo -e "\t\t-s <START>: [INT] First website from Alexa's top 1M - Default: 1"
+  echo -e "\t\t-e <END>:   [INT] Last website from Alexa's top 1M - Default: 5000"
+  echo -e "\t\t-b <BATCH_SIZE>: [INT] Websites/batch - Default:200"
   echo -e "\t\t-r <RESOLVER>: [INT] DoH resolver to use - Options: 1 (Cloudflare), 2 (Google), 3 (CleanBrowsing), 4 (Quad4) - Default: 1"
   exit
 }
@@ -61,7 +64,7 @@ then
   show_help
 fi
 
-DEPS="tshark tcpdump nano tar bzip2 wget gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils libxt6 screen"
+DEPS="tcpdump nano tar bzip2 wget gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils libxt6 screen"
 
 PYTHON_DEPS="python3 python3-six python3-pandas libpython3-dev"
 
@@ -70,14 +73,15 @@ echo -e "Installing requirements..."
 sudo apt-get update
 sudo apt-get install -y --no-install-recommends $DEPS
 sudo apt-get install -y --no-install-recommends $PYTHON_DEPS
+sudo cd /local/repository/
 sudo dpkg -i source/selenium/python3-urllib3_1.24.1.deb
 sudo dpkg -i source/selenium/python3-selenium_3.14.1.deb
-sudo apt-get autoremove --purge -y
+#sudo apt-get autoremove --purge -y
 sudo wget -q https://ftp.mozilla.org/pub/firefox/releases/74.0/linux-x86_64/en-US/firefox-74.0.tar.bz2
 sudo tar -xjf firefox-74.0.tar.bz2
 sudo tar -xzf source/geckodriver-v0.26.0-linux64.tar.gz
-sudo apt-get clean
-sudo rm -rf /var/lib/apt/lists/*
+#sudo apt-get clean
+#sudo rm -rf /var/lib/apt/lists/*
 sudo rm -rf selenium/
 sudo rm -rf firefox-74.0.tar.bz2
 sudo rm -rf geckodriver-v0.26.0-linux64.tar.gz
@@ -85,28 +89,38 @@ sudo chmod +x geckodriver
 sudo chmod +x source/doh_capture.py
 sudo chmod +x source/start_doh_capture.sh
 sudo cp geckodriver /usr/bin
+sudo rm -rf /usr/lib/firefox
 sudo mkdir -p /usr/lib/firefox
-sudo ln -s $PWD/firefox/firefox /usr/lib/firefox/firefox
-sudo mv source/*.py ./
+sudo ln -s /local/repository/firefox/firefox /usr/lib/firefox/firefox
+sudo mv source/*.py /local/repository/
 sudo mkdir -p pcap
-sudo mv source/*.sh ./
-sudo mv source/*.csv ./
+sudo mv source/*.sh /local/repository/
+sudo mv source/*.csv /local/repository/
+sudo touch /etc/motd
 
-cmd="python3 doh_capture.py -r $RESOLVER -s $START -e $END"
-
-sudo echo -e "\n\n${reverse}${red}" \
-"+-------------------------------------------------------+ \n" \
-"|   ${CMD} is still in progress ! | \n" \
-"|      PLEASE WAIT and CHECK LOGS FOR MORE DETAILS!     | \n" \
-"|  OR IT IS PREFERABLE TO LOGOUT AND LOGIN BACK LATER   | \n" \
-"|               UNTIL THIS MESSAGE DISAPPEARS           | \n" \
-"+-------------------------------------------------------+ ${disable}${none}" | sudo tee  /etc/motd
+sudo echo -e "\n\n${reverse}${red}Install tshark manually!${disable}${none}" | sudo tee  /etc/motd
+sudo echo -e "\n\n${reverse}${red}apt-get install tshark -y --no-install-recommends!${disable}${none}" | sudo tee  /etc/motd
+sudo echo -e "\n\n${reverse}${red}mv /local/repository/others/bashrc_template /root/.bashrc!${disable}${none}" | sudo tee  /etc/motd
+sudo echo -e "\n\n${reverse}${red}. /root/.bashrc!${disable}${none}" | sudo tee  /etc/motd
+sudo echo -e "\n\n${reverse}${red}echo $PATH!${disable}${none}" | sudo tee  /etc/motd
 
 
-sudo python3 doh_capture.py -r $RESOLVER -s $START -e $END
 
-sudo echo -e "\n\n${reverse}${green}" \
-"+-------------------------------------------------------+ \n" \
-"|   ${CMD} has been completed !   | \n" \
-"|                            Check logs!                | \n" \
-"+-----------------------------------------------------------------+ ${disable}${none}" | sudo tee  /etc/motd
+# CMD="python3 doh_capture.py -r ${RESOLVER} -s ${START} -e ${END}"
+#
+# sudo echo -e "\n\n${reverse}${red}" \
+# "+-------------------------------------------------------+ \n" \
+# "|   ${CMD} is still in progress ! | \n" \
+# "|      PLEASE WAIT and CHECK LOGS FOR MORE DETAILS!     | \n" \
+# "|  OR IT IS PREFERABLE TO LOGOUT AND LOGIN BACK LATER   | \n" \
+# "|               UNTIL THIS MESSAGE DISAPPEARS           | \n" \
+# "+-------------------------------------------------------+ ${disable}${none}" | sudo tee  /etc/motd
+#
+#
+# sudo python3 doh_capture.py -r $RESOLVER -s $START -e $END
+#
+# sudo echo -e "\n\n${reverse}${green}" \
+# "+-------------------------------------------------------+ \n" \
+# "|   ${CMD} has been completed !   | \n" \
+# "|                            Check logs!                | \n" \
+# "+-----------------------------------------------------------------+ ${disable}${none}" | sudo tee  /etc/motd
