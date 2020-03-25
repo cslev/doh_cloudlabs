@@ -97,31 +97,33 @@ sudo mkdir -p /local/repository/pcap
 sudo mv /local/repository/source/*.sh /local/repository/
 sudo mv /local/repository/source/*.csv /local/repository/
 sudo touch /etc/motd
-sudo cp /local/repository/source/others/bashrc_template /roor/.bashrc
+sudo cp /local/repository/source/others/bashrc_template /root/.bashrc
+sudo source /root/.bashrc
+
 
 # sudo echo -e "\n\n${reverse}${red}Install tshark manually!${disable}${none}" | sudo tee  /etc/motd
 # sudo echo -e "\n\n${reverse}${red}apt-get install tshark -y --no-install-recommends!${disable}${none}" | sudo tee  /etc/motd
 # sudo echo -e "\n\n${reverse}${red}mv /local/repository/others/bashrc_template /root/.bashrc!${disable}${none}" | sudo tee  /etc/motd
 sudo echo -e "\n\n${reverse}${red}. /root/.bashrc!${disable}${none}\n" | sudo tee -a /etc/motd
-sudo echo -e "\n\n${reverse}${red}echo \$PATH!${disable}${none}" | sudo tee  /etc/motd
+sudo echo -e "\n\n${reverse}${red}\$PATH=${PATH}!${disable}${none}" | sudo tee  /etc/motd
 
 
 
-# CMD="python3 doh_capture.py -r ${RESOLVER} -s ${START} -e ${END}"
-#
-# sudo echo -e "\n\n${reverse}${red}" \
-# "+-------------------------------------------------------+ \n" \
-# "|   ${CMD} is still in progress ! | \n" \
-# "|      PLEASE WAIT and CHECK LOGS FOR MORE DETAILS!     | \n" \
-# "|  OR IT IS PREFERABLE TO LOGOUT AND LOGIN BACK LATER   | \n" \
-# "|               UNTIL THIS MESSAGE DISAPPEARS           | \n" \
-# "+-------------------------------------------------------+ ${disable}${none}" | sudo tee  /etc/motd
-#
-#
-# sudo python3 doh_capture.py -r $RESOLVER -s $START -e $END
-#
-# sudo echo -e "\n\n${reverse}${green}" \
-# "+-------------------------------------------------------+ \n" \
-# "|   ${CMD} has been completed !   | \n" \
-# "|                            Check logs!                | \n" \
-# "+-----------------------------------------------------------------+ ${disable}${none}" | sudo tee  /etc/motd
+CMD="python3 doh_capture.py -r ${RESOLVER} -s ${START} -e ${END}"
+
+sudo echo -e "\n\n${reverse}${red}" \
+"+-------------------------------------------------------+ \n" \
+"|   ${CMD} is still in progress ! | \n" \
+"|      PLEASE WAIT and CHECK LOGS FOR MORE DETAILS!     | \n" \
+"|  OR IT IS PREFERABLE TO LOGOUT AND LOGIN BACK LATER   | \n" \
+"|               UNTIL THIS MESSAGE DISAPPEARS           | \n" \
+"+-------------------------------------------------------+ ${disable}${none}" | sudo tee -a /etc/motd
+
+
+sudo python3 doh_capture.py -r $RESOLVER -s $START -e $END
+
+sudo echo -e "\n\n${reverse}${green}" \
+"+-------------------------------------------------------+ \n" \
+"|   ${CMD} has been completed !   | \n" \
+"|                            Check logs!                | \n" \
+"+-----------------------------------------------------------------+ ${disable}${none}" | sudo tee  /etc/motd
