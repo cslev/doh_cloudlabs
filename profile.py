@@ -61,7 +61,7 @@ for key in doh_resolvers:
     # node doh_cloudflare
     kube_doh = request.RawPC(str(key))
     kube_doh.hardware_type = params.osNodeType
-    kube_doh.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:debian9-STD'
+    kube_doh.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:DEB8-64-STD'
     kube_doh.Site(str(key))
 
     # bs0 = kube_doh.Blockstore('bs0', '/mnt/extra')
