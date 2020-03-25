@@ -21,6 +21,9 @@ pc.defineParameter(
     portal.ParameterType.NODETYPE, "utah-m400",
     [("", "any available type"), "utah-dl360", "utah-d2950", "utah-m510", "utah-xl170", "utah-m400", "utah-r720"],
     longDescription="http://docs.cloudlab.us/hardware.html A specific hardware type to use for each node.  Cloudlab clusters all have machines of specific types. When you set this field to a value that is a specific hardware type, you will only be able to instantiate this profile on clusters with machines of that type.  If unset, the experiment may have machines of any available type allocated.")
+
+pc.defineParameter(
+    "osNodeType", "Hardware Type",
     portal.ParameterType.NODETYPE, "wisconsin-c220g1",
     [("", "any available type"), "wisconsin-c220g2", "wisconsin-c220g5", "wisconsin-c240g1", "wisconsin-c240g1"],
     longDescription="http://docs.cloudlab.us/hardware.html A specific hardware type to use for each node.  Cloudlab clusters all have machines of specific types. When you set this field to a value that is a specific hardware type, you will only be able to instantiate this profile on clusters with machines of that type.  If unset, the experiment may have machines of any available type allocated.")
