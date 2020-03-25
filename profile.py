@@ -22,10 +22,16 @@ doh_resolvers = {'cloudflare':1,
 
 for key in doh_resolvers:
     node = request.DockerContainer(str(key))
-    # node.docker_dockerfile = "https://raw.githubusercontent.com/cslev/doh_docker/master/Dockerfile.noautostart"
+    node.docker_dockerfile = "https://raw.githubusercontent.com/cslev/doh_docker/master/Dockerfile.noautostart"
+    node.docker_tbaugmentation = 'full'
+    node.docker_tbaugmentation_update=True
+
+
+
+
     # node.docker_extimage = "debian:bullseye"
-    node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops//docker-debian9-std"
+    # node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops//docker-debian9-std"
     #install all dependencies
-    node.addService(pg.Execute(shell="bash", command="apt-get update && apt-get install git"))
+    # node.addService(pg.Execute(shell="bash", command="apt-get update && apt-get install git"))
 
 portal.context.printRequestRSpec()
