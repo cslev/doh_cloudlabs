@@ -100,12 +100,12 @@ sudo touch /etc/motd
 sudo cp /local/repository/source/others/bashrc_template /root/.bashrc
 sudo source /root/.bashrc
 sudo cp /local/repository/source/others/bashrc_template /users/cslev/.bashrc
-
+sudo echo "cslev   ALL= NOPASSWD:/usr/sbin/tcpdump" >> /etc/sudoers
 
 # sudo echo -e "\n\n${reverse}${red}Install tshark manually!${disable}${none}" | sudo tee  /etc/motd
 # sudo echo -e "\n\n${reverse}${red}apt-get install tshark -y --no-install-recommends!${disable}${none}" | sudo tee  /etc/motd
 # sudo echo -e "\n\n${reverse}${red}mv /local/repository/others/bashrc_template /root/.bashrc!${disable}${none}" | sudo tee  /etc/motd
-sudo echo -e "\n\n${reverse}${red}. /root/.bashrc!${disable}${none}\n" | sudo tee -a /etc/motd
+# sudo echo -e "\n\n${reverse}${red}. /root/.bashrc!${disable}${none}" | sudo tee -a /etc/motd
 sudo echo -e "\n\n${reverse}${red}\$PATH=${PATH}!${disable}${none}" | sudo tee -a /etc/motd
 
 
