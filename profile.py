@@ -38,12 +38,12 @@ tour.Instructions(IG.Tour.MARKDOWN,kube_instruction)
 request.addTour(tour)
 
 
-# doh_resolvers = {'cloudflare':1,
-#                  'google':2,
-#                  'cleanbrowsing':3,
-#                  'quad9':4}
+doh_resolvers = {'cloudflare':1,
+                 'google':2,
+                 'cleanbrowsing':3,
+                 'quad9':4}
 
-doh_resolvers={'cloudflare':1}
+# doh_resolvers={'cloudflare':1}
 
 for key in doh_resolvers:
     node = request.DockerContainer(str(key))
