@@ -12,7 +12,25 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from time import sleep,ctime
 import multiprocessing
 import time
+import datetime
 import argparse
+
+
+def getDateFormat(timestamp):
+    '''
+    This simple function converts traditional UNIX timestamp to YMD_HMS format
+    timestamp int - unix timestamp to be converted
+    return String - the YMD_HMS format as a string
+    '''
+    return datetime.datetime.\
+        fromtimestamp(float(timestamp)).strftime('%Y%m%d_%H%M%S')
+
+
+#get current timestamp and convert it
+ts = time.time()
+timestamp = getDateFormat(str(ts))
+
+log_file = "log_"+str(timestamp)
 
 # parser for the command line arguements
 parser = argparse.ArgumentParser(description="DoH packet capture and .csv conversion script!")
@@ -24,9 +42,9 @@ parser.add_argument('-r', action="store", default=1, type=int, dest="doh_resolve
 
 results = parser.parse_args()
 
-print("Creating Log File!")
-logs = open('Progress.txt', 'a')
-logs.write("Progress Log for doh_capture.py\n\n")
+print("Creating log file "+log_file)
+logs = open(log_file, 'a')
+logs.write("Logging for doh_capture.py started on "+timestamp+"\n\n")
 
 
 
@@ -153,7 +171,7 @@ while(e<=stop) :
     filename = 'pcap/capture-'+str(s)+'-'+str(e)
 
     ## here after -i you need to add the ethernet port. which i guess is eth0
-    shell_command = "timeout 4400 tcpdump port 443 -i eno1 -w " + filename
+    shell_command = "sudo timeout 4400 tcpdump port 443 -i eno1 -w " + filename
 
     t1 = multiprocessing.Process(target=main_driver, args=(s,e,))
     t2 = multiprocessing.Process(target=capture_packets, args=(shell_command,))
@@ -176,12 +194,14 @@ while(e<=stop) :
 
     print("Running pcap file analyser to create csv files...")
     logs.write("Running pcap file analyser to create csv files...\n")
-    logs.close()
 
-    csv_command = "python3 csv_generator.py"
+    csv_command = "python3 csv_generator.py -l "+log_file
     os.system(csv_command)
     sleep(1)
     # this part is for moving the files to another location which is not needed in case of the docker container.
     """move_command = "mv "+filename+" /mnt/debianDoH_images/DoH_Pcaps/debianDoH2/"+filename
     os.system(move_command)
     print("File moved to /mnt") """
+
+
+logs.close()
