@@ -41,6 +41,15 @@ do
  r)
    RESOLVER=$OPTARG
    ;;
+ s)
+   START=$OPTARG
+   ;;
+ e)
+   END=$OPTARG
+   ;;
+ b)
+   BATCH=$OPTARG
+   ;;
  *)
    show_help
   ;;
@@ -52,35 +61,52 @@ then
   show_help
 fi
 
-DEPS="tshark tcpdump nano tar bzip2 wget gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils libxt6"
+DEPS="tshark tcpdump nano tar bzip2 wget gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils libxt6 screen"
 
 PYTHON_DEPS="python3 python3-six python3-pandas libpython3-dev"
 
 
 echo -e "Installing requirements..."
-apt-get update
-apt-get install -y --no-install-recommends $DEPS
-apt-get install -y --no-install-recommends $PYTHON_DEPS
-dpkg -i source/selenium/python3-urllib3_1.24.1.deb
-dpkg -i source/selenium/python3-selenium_3.14.1.deb
-apt-get autoremove --purge -y
-wget -q https://ftp.mozilla.org/pub/firefox/releases/74.0/linux-x86_64/en-US/firefox-74.0.tar.bz2
-tar -xjf firefox-74.0.tar.bz2
-tar -xzf source/geckodriver-v0.26.0-linux64.tar.gz
-apt-get clean
-rm -rf /var/lib/apt/lists/*
-rm -rf selenium/
-rm -rf firefox-74.0.tar.bz2
-rm -rf geckodriver-v0.26.0-linux64.tar.gz
-chmod +x geckodriver
-chmod +x source/doh_capture.py
-chmod +x source/start_doh_capture.sh
-cp geckodriver /usr/bin
-mkdir -p /usr/lib/firefox
-ln -s $PWD/firefox/firefox /usr/lib/firefox/firefox
-mv source/others/bashrc_template /root/.bashrc
-source /root/.bashrc
-mkdir -p pcap
-mv source/*.py ./
-mv source/*.sh ./
-mv source/*.csv ./
+sudo apt-get update
+sudo apt-get install -y --no-install-recommends $DEPS
+sudo apt-get install -y --no-install-recommends $PYTHON_DEPS
+sudo dpkg -i source/selenium/python3-urllib3_1.24.1.deb
+sudo dpkg -i source/selenium/python3-selenium_3.14.1.deb
+sudo apt-get autoremove --purge -y
+sudo wget -q https://ftp.mozilla.org/pub/firefox/releases/74.0/linux-x86_64/en-US/firefox-74.0.tar.bz2
+sudo tar -xjf firefox-74.0.tar.bz2
+sudo tar -xzf source/geckodriver-v0.26.0-linux64.tar.gz
+sudo apt-get clean
+sudo rm -rf /var/lib/apt/lists/*
+sudo rm -rf selenium/
+sudo rm -rf firefox-74.0.tar.bz2
+sudo rm -rf geckodriver-v0.26.0-linux64.tar.gz
+sudo chmod +x geckodriver
+sudo chmod +x source/doh_capture.py
+sudo chmod +x source/start_doh_capture.sh
+sudo cp geckodriver /usr/bin
+sudo mkdir -p /usr/lib/firefox
+sudo ln -s $PWD/firefox/firefox /usr/lib/firefox/firefox
+sudo mv source/*.py ./
+sudo mkdir -p pcap
+sudo mv source/*.sh ./
+sudo mv source/*.csv ./
+
+cmd="python3 doh_capture.py -r $RESOLVER -s $START -e $END"
+
+sudo echo -e "\n\n${reverse}${red}" \
+"+-------------------------------------------------------+ \n" \
+"|   ${CMD} is still in progress ! | \n" \
+"|      PLEASE WAIT and CHECK LOGS FOR MORE DETAILS!     | \n" \
+"|  OR IT IS PREFERABLE TO LOGOUT AND LOGIN BACK LATER   | \n" \
+"|               UNTIL THIS MESSAGE DISAPPEARS           | \n" \
+"+-------------------------------------------------------+ ${disable}${none}" | sudo tee  /etc/motd
+
+
+sudo python3 doh_capture.py -r $RESOLVER -s $START -e $END
+
+sudo echo -e "\n\n${reverse}${green}" \
+"+-------------------------------------------------------+ \n" \
+"|   ${CMD} has been completed !   | \n" \
+"|                            Check logs!                | \n" \
+"+-----------------------------------------------------------------+ ${disable}${none}" | sudo tee  /etc/motd
