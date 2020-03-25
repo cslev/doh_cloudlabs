@@ -44,20 +44,31 @@ doh_resolvers = {'cloudflare':1,
                  'quad9':4}
 
 # doh_resolvers={'cloudflare':1}
+start=1
+end=2000
 
 for key in doh_resolvers:
-    node = request.DockerContainer(str(key))
+    # node = request.DockerContainer(str(key))
     # node.docker_dockerfile = "https://raw.githubusercontent.com/cslev/doh_docker/master/Dockerfile.noautostart"
     # node.docker_extimage = "cslev/doh_docker:noautostart"
     # node.docker_tbaugmentation = 'full'
     # node.docker_tbaugmentation_update=True
-
-
-
-
-    node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops//docker-debian9-std"
-    node.docker_cmd = "apt-get update && apt-get install git && mkdir -p /doh_project/ && git clone https://github.com/cslev/doh_cloudlabs /doh_project"
+    # node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops//docker-debian9-std"
+    # node.docker_cmd = "apt-get update && apt-get install git && mkdir -p /doh_project/ && git clone https://github.com/cslev/doh_cloudlabs /doh_project"
     #install all dependencies
     # node.addService(pg.Execute(shell="bash", command="apt-get update && apt-get install git"))
+
+    # node doh_cloudflare
+    kube_doh = request.RawPC(str(key))
+    kube_doh.hardware_type = params.osNodeType
+    kube_doh.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:debian9-STD'
+    kube_doh.Site(str(key))
+
+    # bs0 = kube_doh.Blockstore('bs0', '/mnt/extra')
+    # bs0.size = '1GB'
+    # bs0.placement = 'NONSYSVOL'
+
+    #start doh_capture
+    kube_doh.addService(pg.Execute(shell="bash", command="/local/repository/cloudlabs_start.sh -r "+str(doh_resolvers[key])+" -s "+str(start)+" -e "+str(end)))
 
 portal.context.printRequestRSpec()
