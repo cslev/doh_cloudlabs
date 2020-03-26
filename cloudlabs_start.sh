@@ -68,8 +68,10 @@ DEPS="tshark tcpdump nano tar bzip2 wget gconf-service libasound2 libatk1.0-0 li
 
 PYTHON_DEPS="python3 python3-six python3-pandas libpython3-dev"
 
+sudo echo -e "\n\n${reverse}${red}Installing is still in progess...!${disable}${none}" | sudo tee /etc/motd
 
 echo -e "Installing requirements..."
+sudo add-apt-repository ppa:wireshark-dev/stable -y
 sudo apt-get update
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $DEPS
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $PYTHON_DEPS
@@ -106,25 +108,4 @@ sudo echo "cslev   ALL= NOPASSWD:/usr/sbin/tcpdump" >> /etc/sudoers
 # sudo echo -e "\n\n${reverse}${red}apt-get install tshark -y --no-install-recommends!${disable}${none}" | sudo tee  /etc/motd
 # sudo echo -e "\n\n${reverse}${red}mv /local/repository/others/bashrc_template /root/.bashrc!${disable}${none}" | sudo tee  /etc/motd
 # sudo echo -e "\n\n${reverse}${red}. /root/.bashrc!${disable}${none}" | sudo tee -a /etc/motd
-sudo echo -e "\n\n${reverse}${red}\$PATH=${PATH}!${disable}${none}" | sudo tee -a /etc/motd
-
-
-
-# CMD="python3 doh_capture.py -r ${RESOLVER} -s ${START} -e ${END}"
-#
-# sudo echo -e "\n\n${reverse}${red}" \
-# "+-------------------------------------------------------+ \n" \
-# "|   ${CMD} is still in progress ! | \n" \
-# "|      PLEASE WAIT and CHECK LOGS FOR MORE DETAILS!     | \n" \
-# "|  OR IT IS PREFERABLE TO LOGOUT AND LOGIN BACK LATER   | \n" \
-# "|               UNTIL THIS MESSAGE DISAPPEARS           | \n" \
-# "+-------------------------------------------------------+ ${disable}${none}" | sudo tee -a /etc/motd
-#
-#
-# sudo python3 doh_capture.py -r $RESOLVER -s $START -e $END
-#
-# sudo echo -e "\n\n${reverse}${green}" \
-# "+-------------------------------------------------------+ \n" \
-# "|   ${CMD} has been completed !   | \n" \
-# "|                            Check logs!                | \n" \
-# "+-----------------------------------------------------------------+ ${disable}${none}" | sudo tee  /etc/motd
+sudo echo -e "\n\n${reverse}${green}Installation finished\n\$PATH=${PATH}!${disable}${none}" | sudo tee /etc/motd
