@@ -9,9 +9,11 @@ alias acs='apt-cache search'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
+hostname=$(hostname |cut -d '.' -f 1)
+
 case $TERM in
         xterm*|rxvt|Eterm|eterm|cygwin)
-PS1='\[\033[1m\]\[\033[38;5;208m\][NUS-\[\033[3m\]\[\033[38;5;196m\]Singtel]\[\033[0;1m\]\[\033[38;5;78m\][DoH_CloudLab]${debian_chroot:+($debian_chroot)} \[\033[01;31m\]\u \[\033[38;5;78m\]\w\$\[\033[00m\] '
+PS1='\[\033[1m\]\[\033[38;5;208m\][NUS-\[\033[3m\]\[\033[38;5;196m\]Singtel]\[\033[0;1m\]\[\033[38;5;78m\][DoH_CloudLab_${hostname}]${debian_chroot:+($debian_chroot)} \[\033[01;31m\]\u \[\033[38;5;78m\]\w\$\[\033[00m\] '
 
         ;;
 esac
