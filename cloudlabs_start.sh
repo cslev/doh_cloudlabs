@@ -103,6 +103,8 @@ sudo cp /local/repository/source/others/bashrc_template /root/.bashrc
 sudo source /root/.bashrc
 sudo cp /local/repository/source/others/bashrc_template /users/cslev/.bashrc
 sudo echo "cslev   ALL= NOPASSWD:/usr/sbin/tcpdump" >> /etc/sudoers
+sudo apt-get install -f -y
+sudo apt-get autoremove -y
 
 # sudo echo -e "\n\n${reverse}${red}Install tshark manually!${disable}${none}" | sudo tee  /etc/motd
 # sudo echo -e "\n\n${reverse}${red}apt-get install tshark -y --no-install-recommends!${disable}${none}" | sudo tee  /etc/motd
