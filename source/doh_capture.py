@@ -173,7 +173,7 @@ def main_driver(s,e) :
     for domain in df['website'] :
         url = 'https://www.' + domain
 
-        print(str(count) + " " + url )
+        # print(str(count) + " " + url )
         open_website(url,count)
         count = count + 1
 
