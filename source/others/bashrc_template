@@ -43,3 +43,5 @@ export PATH=$PATH:/local/repository/firefox
 #exporting SSL related ENV variables for firefox
 export SSLKEYLOGFILE=/local/repository/ssl-key.log
 export SSLDEBUGFILE=/local/repository/ssl-debug.log
+
+cd /local/repository
