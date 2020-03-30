@@ -29,7 +29,7 @@ cd /local/repository/
 
 
 #cp others/bashrc_template /root/.bashrc
-source /root/.bashrc
+# source /root/.bashrc
 echo -e "+-------------------------------------------------------------+"
 echo -e "|${bold}   Found ENV variables${none}    "
 echo -e "|${bold}${yellow}PATH:${green} ${PATH}${none}"
