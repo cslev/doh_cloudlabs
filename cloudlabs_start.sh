@@ -98,6 +98,7 @@ sudo mv /local/repository/source/*.py /local/repository/
 sudo mkdir -p /local/repository/pcap
 sudo mv /local/repository/source/*.sh /local/repository/
 sudo mv /local/repository/source/*.csv /local/repository/
+sudo mv /local/repository/source/r_config.json /local/repository/
 sudo touch /etc/motd
 sudo cp /local/repository/source/others/bashrc_template /root/.bashrc
 sudo source /root/.bashrc
