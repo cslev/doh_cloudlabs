@@ -47,6 +47,7 @@ START=$2    # Integer
 END=$3      # Integer
 BATCH=$4    # Integer
 META=$5  # used for extra information in the archive_name
+INTF=$6     # interface to use (default: eth0)
 # ------------------------------------
 
 if [ ! -z "$RESOLVER" ]
@@ -77,6 +78,15 @@ else
   B=""
 fi
 
+if [ ! -z "$INTF" ]
+then
+  I="-i ${INTF}"
+else
+  I=""
+fi
+
+
+
 
 declare -A resolvers
 resolvers=(
@@ -95,17 +105,20 @@ echo -e "START = ${green}$S${none}"
 echo -e "END = ${green}$E${none}"
 echo -e "BATCH = ${green}$B${none}"
 echo -e "META = ${green}$META${none}"
+echo -e "INTF = ${green}$INTF${none}"
 echo -e "+================================================+"
 
 
-python3 doh_capture.py $R $S $E $B
+python3 doh_capture.py $R $S $E $B $I
 
 echo -ne "${yellow}Compressing data...${none}" >> $log_file
 cd /doh_project/
 # copy the symlink target to have it in the compressed data as well
 cp -Lr $log_file doh_log.log
 # $RESOLVER is an INT so will be good for accessing the resolver name from the array
-archive_name="doh_data_${resolvers[${RESOLVER}]}_${META}_${START}-${END}.tar.gz"
+#get date
+d=$(date +"%Y%m%d_%H%M%S")
+archive_name="doh_data_${resolvers[${RESOLVER}]}_${META}_${START}-${END}_${d}.tar.gz"
 tar -czf $archive_name csvfile* doh_log.log
 echo -e "\t${green}[DONE]${none}" >> $log_file
 

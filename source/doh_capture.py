@@ -30,7 +30,6 @@ def getDateFormat(timestamp):
 ts = time.time()
 timestamp = getDateFormat(str(ts))
 
-log_file = "log_"+str(timestamp)
 
 # parser for the command line arguements
 parser = argparse.ArgumentParser(description="DoH packet capture and .csv conversion script!")
@@ -39,6 +38,10 @@ parser.add_argument('-s', action="store", default=1, type=int, dest="start" , he
 parser.add_argument('-e', action="store", default=5000, type=int, dest="end" , help="Specify rank of the ending website")
 parser.add_argument('-b', action="store", default=200, type=int, dest="batch" , help="Batch Size (range must be a multiple of batch size!)")
 parser.add_argument('-r', action="store", default=1, type=int, dest="doh_resolver" , help="DoH resolver :\n1=Cloudflare; \n2=Google;\n3=CleanBrowsing;\n4=Quad9;")
+parser.add_argument('-i', '--interface', nargs=1,
+                    help="Specify the interface to use for capturing",
+                    required=False,
+                    default=['eth0'])
 
 results = parser.parse_args()
 
@@ -84,11 +87,11 @@ else :
     exit(0)
 
 
-
 start = results.start
 stop = results.end
 batch_size = results.batch
 time_out = batch_size * 15
+interface = results.interface[0]
 
 # Fine-tune batch size if it is bigger than stop-start
 max_possible_batch_size = stop-start+1
@@ -157,14 +160,13 @@ def open_website(url,count):
         print("Exception has been thrown "+ str(ex1))
         driver.close()
         sleep(2)
-        logs.write(str(ex1)+"\n")
+        logs.write("Exception has been thrown \n"+str(ex1)+"\n")
     except WebDriverException as ex2 :
         print("Exception has been thrown "+ str(ex2))
         driver.close()
         sleep(2)
-        logs.write(str(ex2)+"\n")
+        logs.write("Exception has been thrown \n"+str(ex2)+"\n")
     logs.flush()
-    # logs.close()
     sleep(1)
 
 def main_driver(s,e) :
@@ -172,8 +174,6 @@ def main_driver(s,e) :
     df = data.iloc[s-1:e]
     for domain in df['website'] :
         url = 'https://www.' + domain
-
-        # print(str(count) + " " + url )
         open_website(url,count)
         count = count + 1
 
@@ -196,7 +196,7 @@ while(e<=stop) :
     filename = 'pcap/capture-'+str(s)+'-'+str(e)
 
     ## here after -i you need to add the ethernet port. which i guess is eth0
-    shell_command = "sudo timeout 4400 tcpdump port 443 -i eno1 -w " + filename
+    shell_command = "sudo timeout 4400 tcpdump port 443 -i " + interface + " -w " + filename
 
     t1 = multiprocessing.Process(target=main_driver, args=(s,e,))
     t2 = multiprocessing.Process(target=capture_packets, args=(shell_command,))
@@ -214,6 +214,8 @@ while(e<=stop) :
     logs.flush()
     sleep(2)
     print(time.ctime())
+    logs.write(time.ctime())
+    logs.flush()
     s = s+batch_size
     e = e+batch_size
 
