@@ -29,7 +29,7 @@ cd /local/repository/
 
 
 #cp others/bashrc_template /root/.bashrc
-# source /root/.bashrc
+source /users/cslev/.bashrc
 echo -e "+-------------------------------------------------------------+"
 echo -e "|${bold}   Found ENV variables${none}    "
 echo -e "|${bold}${yellow}PATH:${green} ${PATH}${none}"
@@ -108,16 +108,16 @@ echo -e "META = ${green}$META${none}"
 echo -e "INTF = ${green}$INTF${none}"
 echo -e "+================================================+"
 
+#get date
+d=$(date +"%Y%m%d_%H%M%S")
 
-python3 doh_capture.py $R $S $E $B $I
+echo 0 > done
+python3 doh_capture.py $R $S $E $B $I > raw_${d}.log
 
 echo -ne "${yellow}Compressing data...${none}" >> $log_file
-cd /doh_project/
 # copy the symlink target to have it in the compressed data as well
 cp -Lr $log_file doh_log.log
 # $RESOLVER is an INT so will be good for accessing the resolver name from the array
-#get date
-d=$(date +"%Y%m%d_%H%M%S")
 archive_name="doh_data_${resolvers[${RESOLVER}]}_${META}_${START}-${END}_${d}.tar.gz"
 tar -czf $archive_name csvfile* doh_log.log
 echo -e "\t${green}[DONE]${none}" >> $log_file
@@ -128,3 +128,4 @@ rm -rf doh_log.log
 echo -e "\t${green}[DONE]${none}\n\n" >> $log_file
 
 sudo echo -e "\n\n${reverse}${green}Doh_capture has been finished!${disable}${none}" | sudo tee -a /etc/motd
+echo 1 > done
