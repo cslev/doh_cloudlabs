@@ -32,10 +32,10 @@ pc = portal.Context()
 request = pc.makeRequestRSpec()
 
 
-# tour = IG.Tour()
-# tour.Description(IG.Tour.TEXT,kube_description)
-# tour.Instructions(IG.Tour.MARKDOWN,kube_instruction)
-# request.addTour(tour)
+tour = IG.Tour()
+tour.Description(IG.Tour.TEXT,kube_description)
+tour.Instructions(IG.Tour.MARKDOWN,kube_instruction)
+request.addTour(tour)
 
 
 doh_resolvers = {'cloudflare':1,
