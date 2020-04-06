@@ -47,7 +47,7 @@ for f in files :
     print(str(count) + " of " + str(total) + " completed!")
     logs.write(str(count) + " of " + str(total) + " completed!\n\n")
     logs.flush()
-    os.system(remove_file)
+    #os.system(remove_file)
     count+=1
 print("csv_generator has finished!")
 logs.write("csv_generator has finished!\n\n")

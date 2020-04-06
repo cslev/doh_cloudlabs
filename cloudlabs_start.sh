@@ -86,51 +86,36 @@ sudo dpkg -i /local/repository/source/selenium/python3-selenium_3.14.1.deb
 
 #ARM64
 #firefox
+sudo apt-get upgrade -y
+sudo apt-get dist-upgrade -y
+sudo sed -i 's/bionic/focal/g' /etc/apt/sources.list
+sudo apt-get update
+sudo apt-get dist-upgrade -y --no-install-recommends
+
 sudo wget -q http://launchpadlibrarian.net/468415450/firefox_74.0+build3-0ubuntu0.18.04.1_arm64.deb
 sudo wget -q http://launchpadlibrarian.net/468415270/firefox-geckodriver_74.0+build3-0ubuntu0.18.04.1_arm64.deb
 sudo dpkg -i firefox_74.0+build3-0ubuntu0.18.04.1_arm64.deb
 sudo dpkg -i firefox-geckodriver_74.0+build3-0ubuntu0.18.04.1_arm64.deb
-
+sudo ln -s `which geckodriver` /local/repository/geckodriver
 #wireshark
-sudo wget -q http://launchpadlibrarian.net/466863445/wireshark-common_3.2.2-1_arm64.deb
-sudo wget -q http://launchpadlibrarian.net/466863440/wireshark_3.2.2-1_arm64.deb
-sudo wget -q http://launchpadlibrarian.net/466863446/wireshark-qt_3.2.2-1_arm64.deb
-sudo wget -q http://launchpadlibrarian.net/466383202/libspeexdsp1_1.2~rc1.2-1.1ubuntu1_arm64.deb
-sudo wget -q http://launchpadlibrarian.net/460981063/libssh-gcrypt-4_0.9.3-2ubuntu1_arm64.deb
-sudo wget -q http://launchpadlibrarian.net/466863441/libwireshark13_3.2.2-1_arm64.deb
-sudo wget -q http://launchpadlibrarian.net/466863442/libwiretap10_3.2.2-1_arm64.deb
-sudo wget -q http://launchpadlibrarian.net/466863443/libwsutil11_3.2.2-1_arm64.deb
-sudo wget -q http://launchpadlibrarian.net/472663865/libc6_2.31-0ubuntu7_arm64.deb
-sudo wget -q http://launchpadlibrarian.net/470550223/libgcc-s1_10-20200324-1ubuntu1_arm64.deb
-sudo wget -q http://launchpadlibrarian.net/381568475/libnl-route-3-200_3.4.0-1_arm64.deb
-dpkg: dependency problems prevent configuration of wireshark-qt:
- wireshark-qt depends on libc6 (>= 2.29); however:
-  Version of libc6:arm64 on system is 2.27-3ubuntu1.
- wireshark-qt depends on libgcc-s1 (>= 3.0); however:
-  Package libgcc-s1 is not installed.
- wireshark-qt depends on libnl-route-3-200 (>= 3.2.7); however:
-  Package libnl-route-3-200 is not installed.
- wireshark-qt depends on libqt5core5a (>= 5.10.0); however:
-  Package libqt5core5a is not installed.
- wireshark-qt depends on libqt5gui5 (>= 5.11.0~rc1) | libqt5gui5-gles (>= 5.11.0~rc1); however:
-  Package libqt5gui5 is not installed.
-  Package libqt5gui5-gles is not installed.
- wireshark-qt depends on libqt5multimedia5 (>= 5.6.0~beta); however:
-  Package libqt5multimedia5 is not installed.
- wireshark-qt depends on libqt5printsupport5 (>= 5.2.0); however:
-  Package libqt5printsupport5 is not installed.
- wireshark-qt depends on libqt5widgets5 (>= 5.12.2); however:
-  Package libqt5widgets5 is not installed.
- wireshark-qt depends on libspeexdsp1 (>= 1.2~beta3.2-1); however:
-  Package libspeexdsp1 is not installed.
- wireshark-qt depends on libwireshark13 (>= 3.1.1); however:
-  Package libwireshark13 is not installed.
- wireshark-qt depends on libwiretap10 (>= 2.9.1); however:
-  Package libwiretap10 is not installed.
- wireshark-qt depends on libwsutil11 (>= 3.1.1); however:
-  Package libwsutil11 is not installed.
- wireshark-qt depends on wireshark-common (= 3.2.2-1); however:
-  Package wireshark-common is not configured yet.
+# sudo wget -q http://launchpadlibrarian.net/466863445/wireshark-common_3.2.2-1_arm64.deb
+# sudo wget -q http://launchpadlibrarian.net/466863440/wireshark_3.2.2-1_arm64.deb
+# sudo wget -q http://launchpadlibrarian.net/466863446/wireshark-qt_3.2.2-1_arm64.deb
+# sudo wget -q http://launchpadlibrarian.net/466383202/libspeexdsp1_1.2~rc1.2-1.1ubuntu1_arm64.deb
+# sudo wget -q http://launchpadlibrarian.net/460981063/libssh-gcrypt-4_0.9.3-2ubuntu1_arm64.deb
+# sudo wget -q http://launchpadlibrarian.net/466863441/libwireshark13_3.2.2-1_arm64.deb
+# sudo wget -q http://launchpadlibrarian.net/466863442/libwiretap10_3.2.2-1_arm64.deb
+# sudo wget -q http://launchpadlibrarian.net/466863443/libwsutil11_3.2.2-1_arm64.deb
+# sudo wget -q http://launchpadlibrarian.net/472663865/libc6_2.31-0ubuntu7_arm64.deb
+# sudo wget -q http://launchpadlibrarian.net/470550223/libgcc-s1_10-20200324-1ubuntu1_arm64.deb
+# sudo wget -q http://launchpadlibrarian.net/381568475/libnl-route-3-200_3.4.0-1_arm64.deb
+# sudo wget -q http://launchpadlibrarian.net/467651779/libqt5core5a_5.12.5+dfsg-9build1_arm64.deb
+# sudo wget -q http://launchpadlibrarian.net/467651781/libqt5gui5_5.12.5+dfsg-9build1_arm64.deb
+# sudo wget -q http://launchpadlibrarian.net/470308713/libqt5multimedia5_5.12.5-1build1_arm64.deb
+# sudo wget -q http://launchpadlibrarian.net/467651784/libqt5printsupport5_5.12.5+dfsg-9build1_arm64.deb
+# sudo wget -q http://launchpadlibrarian.net/467651795/libqt5widgets5_5.12.5+dfsg-9build1_arm64.deb
+# sudo wget -q http://launchpadlibrarian.net/468524216/libcrypt1_4.4.10-10ubuntu4_arm64.deb
+# sudo wget -q http://launchpadlibrarian.net/472714316/locales_2.31-0ubuntu7_all.deb
 
 #========== ARM64 END =================
 
@@ -142,9 +127,9 @@ sudo chmod +x /local/repository/geckodriver
 sudo chmod +x /local/repository/source/doh_capture.py
 sudo chmod +x /local/repository/source/start_doh_capture.sh
 sudo cp /local/repository/geckodriver /usr/bin
-sudo rm -rf /usr/lib/firefox
+# sudo rm -rf /usr/lib/firefox
 sudo mkdir -p /usr/lib/firefox
-sudo ln -s /local/repository/firefox/firefox /usr/lib/firefox/firefox
+# sudo ln -s /local/repository/firefox/firefox /usr/lib/firefox/firefox
 sudo mv /local/repository/source/*.py /local/repository/
 sudo mkdir -p /local/repository/pcap
 sudo mv /local/repository/source/*.sh /local/repository/

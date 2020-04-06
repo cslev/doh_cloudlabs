@@ -122,10 +122,10 @@ archive_name="doh_data_${resolvers[${RESOLVER}]}_${META}_${START}-${END}_${d}.ta
 tar -czf $archive_name csvfile* doh_log.log
 echo -e "\t${green}[DONE]${none}" >> $log_file
 
-echo -ne "${yellow}Removing csv files${none}" >> $log_file
-rm -rf csvfile*
-rm -rf doh_log.log
-echo -e "\t${green}[DONE]${none}\n\n" >> $log_file
+# echo -ne "${yellow}Removing csv files${none}" >> $log_file
+# rm -rf csvfile*
+# rm -rf doh_log.log
+# echo -e "\t${green}[DONE]${none}\n\n" >> $log_file
 
 sudo echo -e "\n\n${reverse}${green}Doh_capture has been finished!${disable}${none}" | sudo tee -a /etc/motd
 echo 1 > done
