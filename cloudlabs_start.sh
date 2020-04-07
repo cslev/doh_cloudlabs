@@ -71,8 +71,16 @@ PYTHON_DEPS="python3 python3-six python3-pandas python3-simplejson libpython3-de
 sudo echo -e "\n\n${reverse}${red}Installing is still in progess...!${disable}${none}" | sudo tee /etc/motd
 
 echo -e "Installing requirements..."
-sudo add-apt-repository ppa:wireshark-dev/stable -y
+# sudo add-apt-repository ppa:wireshark-dev/stable -y
+# sudo apt-get update
+# ========== ARM64 ========
+#upgrade to focal ubuntu 20.04
+sudo apt-get upgrade -y
+sudo apt-get dist-upgrade -y
+sudo sed -i 's/bionic/focal/g' /etc/apt/sources.list
 sudo apt-get update
+sudo apt-get dist-upgrade -y --no-install-recommends
+
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $DEPS
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $PYTHON_DEPS
 # sudo cd /local/repository/
@@ -86,37 +94,12 @@ sudo dpkg -i /local/repository/source/selenium/python3-selenium_3.14.1.deb
 
 #ARM64
 #firefox
-sudo apt-get upgrade -y
-sudo apt-get dist-upgrade -y
-sudo sed -i 's/bionic/focal/g' /etc/apt/sources.list
-sudo apt-get update
-sudo apt-get dist-upgrade -y --no-install-recommends
-
 sudo wget -q http://launchpadlibrarian.net/468415450/firefox_74.0+build3-0ubuntu0.18.04.1_arm64.deb
 sudo wget -q http://launchpadlibrarian.net/468415270/firefox-geckodriver_74.0+build3-0ubuntu0.18.04.1_arm64.deb
 sudo dpkg -i firefox_74.0+build3-0ubuntu0.18.04.1_arm64.deb
 sudo dpkg -i firefox-geckodriver_74.0+build3-0ubuntu0.18.04.1_arm64.deb
 sudo ln -s `which geckodriver` /local/repository/geckodriver
-#wireshark
-# sudo wget -q http://launchpadlibrarian.net/466863445/wireshark-common_3.2.2-1_arm64.deb
-# sudo wget -q http://launchpadlibrarian.net/466863440/wireshark_3.2.2-1_arm64.deb
-# sudo wget -q http://launchpadlibrarian.net/466863446/wireshark-qt_3.2.2-1_arm64.deb
-# sudo wget -q http://launchpadlibrarian.net/466383202/libspeexdsp1_1.2~rc1.2-1.1ubuntu1_arm64.deb
-# sudo wget -q http://launchpadlibrarian.net/460981063/libssh-gcrypt-4_0.9.3-2ubuntu1_arm64.deb
-# sudo wget -q http://launchpadlibrarian.net/466863441/libwireshark13_3.2.2-1_arm64.deb
-# sudo wget -q http://launchpadlibrarian.net/466863442/libwiretap10_3.2.2-1_arm64.deb
-# sudo wget -q http://launchpadlibrarian.net/466863443/libwsutil11_3.2.2-1_arm64.deb
-# sudo wget -q http://launchpadlibrarian.net/472663865/libc6_2.31-0ubuntu7_arm64.deb
-# sudo wget -q http://launchpadlibrarian.net/470550223/libgcc-s1_10-20200324-1ubuntu1_arm64.deb
-# sudo wget -q http://launchpadlibrarian.net/381568475/libnl-route-3-200_3.4.0-1_arm64.deb
-# sudo wget -q http://launchpadlibrarian.net/467651779/libqt5core5a_5.12.5+dfsg-9build1_arm64.deb
-# sudo wget -q http://launchpadlibrarian.net/467651781/libqt5gui5_5.12.5+dfsg-9build1_arm64.deb
-# sudo wget -q http://launchpadlibrarian.net/470308713/libqt5multimedia5_5.12.5-1build1_arm64.deb
-# sudo wget -q http://launchpadlibrarian.net/467651784/libqt5printsupport5_5.12.5+dfsg-9build1_arm64.deb
-# sudo wget -q http://launchpadlibrarian.net/467651795/libqt5widgets5_5.12.5+dfsg-9build1_arm64.deb
-# sudo wget -q http://launchpadlibrarian.net/468524216/libcrypt1_4.4.10-10ubuntu4_arm64.deb
-# sudo wget -q http://launchpadlibrarian.net/472714316/locales_2.31-0ubuntu7_all.deb
-
+sudo apt-ge
 #========== ARM64 END =================
 
 #sudo rm -rf /var/lib/apt/lists/*
