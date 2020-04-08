@@ -75,11 +75,7 @@ echo -e "Installing requirements..."
 # sudo apt-get update
 # ========== ARM64 ========
 #upgrade to focal ubuntu 20.04
-sudo apt-get upgrade -y
-sudo apt-get dist-upgrade -y
-sudo sed -i 's/bionic/focal/g' /etc/apt/sources.list
-sudo apt-get update
-sudo apt-get dist-upgrade -y --no-install-recommends
+
 
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $DEPS
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $PYTHON_DEPS
@@ -93,6 +89,13 @@ sudo dpkg -i /local/repository/source/selenium/python3-selenium_3.14.1.deb
 #sudo tar -xzf /local/repository/source/geckodriver-v0.26.0-linux64.tar.gz -C /local/repository
 
 #ARM64
+sudo apt-get upgrade -y
+sudo apt-get dist-upgrade -y
+sudo sed -i 's/bionic/focal/g' /etc/apt/sources.list
+sudo apt-get update
+
+#sudo apt-get dist-upgrade -y --no-install-recommends
+
 #firefox
 sudo wget -q http://launchpadlibrarian.net/468415450/firefox_74.0+build3-0ubuntu0.18.04.1_arm64.deb
 sudo wget -q http://launchpadlibrarian.net/468415270/firefox-geckodriver_74.0+build3-0ubuntu0.18.04.1_arm64.deb
