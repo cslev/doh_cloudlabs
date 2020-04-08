@@ -115,6 +115,7 @@ sudo mkdir -p /usr/lib/firefox
 # sudo ln -s /local/repository/firefox/firefox /usr/lib/firefox/firefox
 sudo mv /local/repository/source/*.py /local/repository/
 sudo mkdir -p /local/repository/pcap
+sudo mkdir -p /local/repository/csv
 sudo mv /local/repository/source/*.sh /local/repository/
 sudo mv /local/repository/source/*.csv /local/repository/
 sudo mv /local/repository/source/r_config.json /local/repository/

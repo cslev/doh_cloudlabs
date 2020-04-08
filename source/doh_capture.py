@@ -16,6 +16,10 @@ import datetime
 import argparse
 import json
 
+#getting the ENV files for the SSLKEYLOG
+SSLKEY   = os.getenv('SSLKEYLOGFILE')
+SSLDEBUG = os.getenv('SSLDEBUGFILE')
+
 
 def getDateFormat(timestamp):
     '''
@@ -204,6 +208,9 @@ def capture_packets(shell_command) :
 
 
 while(e<=stop) :
+    if(e>stop) :
+        e=stop
+
     filename = 'pcap/capture-'+str(s)+'-'+str(e)
 
     ## here after -i you need to add the ethernet port. which i guess is eth0
@@ -230,16 +237,19 @@ while(e<=stop) :
     s = s+batch_size
     e = e+batch_size
 
-    print("Running pcap file analyser to create csv files...")
-    logs.write("Running pcap file analyser to create csv files...\n")
-
-    csv_command = "python3 csv_generator.py -l "+log_file
+    # csv generation
+    output_file_name = "csv/csvfile-"+f.split('-')[1] + "-" + f.split('-')[2] +".csv"
+    print("Running pcap file analyser to create the csv file {}...".format{output_file_name})
+    logs.write("Running pcap file analyser to create the csv file {}...\n".format{output_file_name})
+    logs.flush()
+    
+    csv_command = 'tshark -r ' + file_name +' -Y "http2" -o tls.keylog_file:'+SSLKEY+' -T fields -e frame.number -e _ws.col.Time -e ip.src -e ip.dst -e _ws.col.Protocol -e frame.len -e _ws.col.Info -E header=y -E separator="," -E quote=d -E occurrence=f > '+ output_file_name
+    remove_file = "sudo rm -rf "+file_name
     os.system(csv_command)
-    sleep(1)
-    # this part is for moving the files to another location which is not needed in case of the docker container.
-    """move_command = "mv "+filename+" /mnt/debianDoH_images/DoH_Pcaps/debianDoH2/"+filename
-    os.system(move_command)
-    print("File moved to /mnt") """
+    os.system(remove_file)
+    print(str(count) + " of " + str(total) + " completed!")
+    logs.write(str(count) + " of " + str(total) + " completed!\n\n")
+    logs.flush()
 
 
 logs.close()

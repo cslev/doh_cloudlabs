@@ -119,7 +119,7 @@ echo -ne "${yellow}Compressing data...${none}" >> $log_file
 cp -Lr $log_file doh_log.log
 # $RESOLVER is an INT so will be good for accessing the resolver name from the array
 archive_name="doh_data_${resolvers[${RESOLVER}]}_${META}_${START}-${END}_${d}.tar.gz"
-tar -czf $archive_name csvfile* doh_log.log
+tar -czf $archive_name csv/ doh_log.log
 echo -e "\t${green}[DONE]${none}" >> $log_file
 
 # echo -ne "${yellow}Removing csv files${none}" >> $log_file
