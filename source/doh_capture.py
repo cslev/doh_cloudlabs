@@ -240,15 +240,15 @@ while(e<=stop) :
     # csv generation
     f=filename
     output_file_name = "csv/csvfile-"+f.split('-')[1] + "-" + f.split('-')[2] +".csv"
-    print("Running pcap file analyser to create the csv file {}...".format{output_file_name})
-    logs.write("Running pcap file analyser to create the csv file {}...\n".format{output_file_name})
+    print("Running pcap file analyser to create the csv file {}...".format(output_file_name))
+    logs.write("Running pcap file analyser to create the csv file {}...\n".format(output_file_name))
     logs.flush()
 
     csv_command = 'tshark -r ' + filename +' -Y "http2" -o tls.keylog_file:'+SSLKEY+' -T fields -e frame.number -e _ws.col.Time -e ip.src -e ip.dst -e _ws.col.Protocol -e frame.len -e _ws.col.Info -E header=y -E separator="," -E quote=d -E occurrence=f > '+ output_file_name
     remove_file = "sudo rm -rf "+filename
     os.system(csv_command)
     os.system(remove_file)
-    print(output_file_name + completed!")
+    print(output_file_name + " completed!")
     logs.write(output_file_name + " completed!\n\n")
     logs.flush()
 
