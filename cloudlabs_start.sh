@@ -76,7 +76,7 @@ echo -e "Installing requirements..."
 # ========== ARM64 ========
 #upgrade to focal ubuntu 20.04
 
-
+sudo dpkg-reconfigure debconf --frontend=noninteractive
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $DEPS
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $PYTHON_DEPS
 # sudo cd /local/repository/
