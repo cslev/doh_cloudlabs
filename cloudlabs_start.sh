@@ -89,8 +89,8 @@ sudo dpkg -i /local/repository/source/selenium/python3-selenium_3.14.1.deb
 #sudo tar -xzf /local/repository/source/geckodriver-v0.26.0-linux64.tar.gz -C /local/repository
 
 #ARM64
-sudo apt-get upgrade -y
-sudo apt-get dist-upgrade -y
+sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
+sudo DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
 sudo sed -i 's/bionic/focal/g' /etc/apt/sources.list
 sudo apt-get update
 
