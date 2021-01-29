@@ -47,7 +47,7 @@ doh_resolvers = {'cloudflare':1,
 start=1
 end=2000
 
-for key in doh_resolvers:
+#for key in doh_resolvers:
     # node = request.DockerContainer(str(key))
     # node.docker_dockerfile = "https://raw.githubusercontent.com/cslev/doh_docker/master/Dockerfile.noautostart"
     # node.docker_extimage = "cslev/doh_docker:noautostart"
@@ -58,12 +58,12 @@ for key in doh_resolvers:
     #install all dependencies
     # node.addService(pg.Execute(shell="bash", command="apt-get update && apt-get install git"))
 
-    # node doh_cloudflare
-    kube_doh = request.RawPC(str(key))
-    kube_doh.hardware_type = "m400"
-    # kube_doh.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:DEB8-64-STD' #<-- does not work
-    kube_doh.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-    kube_doh.Site(str(key))
+# node doh_cloudflare
+kube_doh = request.RawPC(str(key))
+kube_doh.hardware_type = "m400"
+# kube_doh.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:DEB8-64-STD' #<-- does not work
+kube_doh.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
+kube_doh.Site(str(key))
 
     # bs0 = kube_doh.Blockstore('bs0', '/mnt/extra')
     # bs0.size = '1GB'
@@ -73,7 +73,7 @@ for key in doh_resolvers:
     #start doh_capture
     #kube_doh.addService(pg.Execute(shell="bash", command="/local/repository/cloudlabs_start.sh -r "+str(doh_resolvers[key])+" -s "+str(start)+" -e "+str(end)))
     
-    #START the docker-based version
-    kube_doh.addService(pg.Execute(shell="bash", command="/local/repository/cloudlabs_start_docker.sh"))
+#START the docker-based version
+kube_doh.addService(pg.Execute(shell="bash", command="/local/repository/cloudlabs_start_docker.sh"))
 
 portal.context.printRequestRSpec()
