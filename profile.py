@@ -69,7 +69,11 @@ for key in doh_resolvers:
     # bs0.size = '1GB'
     # bs0.placement = 'NONSYSVOL'
 
+    #Start the original baremetal version
     #start doh_capture
-    kube_doh.addService(pg.Execute(shell="bash", command="/local/repository/cloudlabs_start.sh -r "+str(doh_resolvers[key])+" -s "+str(start)+" -e "+str(end)))
+    #kube_doh.addService(pg.Execute(shell="bash", command="/local/repository/cloudlabs_start.sh -r "+str(doh_resolvers[key])+" -s "+str(start)+" -e "+str(end)))
+    
+    #START the docker-based version
+    kube_doh.addService(pg.Execute(shell="bash", command="/local/repository/cloudlabs_start_docker.sh"))
 
 portal.context.printRequestRSpec()
