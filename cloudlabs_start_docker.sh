@@ -25,44 +25,6 @@ pink='\033[95m'
 lightcyan='\033[96m'
 
 
-function show_help
-{
-  echo -e "${green}Example:./cloudlas_start.sh -r <RESOLER> ${none}"
-  echo -e "\t\t-s <START>: [INT] First website from Alexa's top 1M - Default: 1"
-  echo -e "\t\t-e <END>:   [INT] Last website from Alexa's top 1M - Default: 5000"
-  echo -e "\t\t-b <BATCH_SIZE>: [INT] Websites/batch - Default:200"
-  echo -e "\t\t-r <RESOLVER>: [INT] DoH resolver to use - Options: 1 (Cloudflare), 2 (Google), 3 (CleanBrowsing), 4 (Quad4) - Default: 1"
-  exit
-}
-
-while getopts "h?s:e:b:r:" opt
-do
- case "$opt" in
- h|\?)
-   show_help
-   ;;
- r)
-   RESOLVER=$OPTARG
-   ;;
- s)
-   START=$OPTARG
-   ;;
- e)
-   END=$OPTARG
-   ;;
- b)
-   BATCH=$OPTARG
-   ;;
- *)
-   show_help
-  ;;
- esac
-done
-
-if [ -z "$RESOLVER" ]
-then
-  show_help
-fi
 
 DEPS="tshark tcpdump nano tar bzip2 wget lsb-release screen procps apt-transport-https ca-certificates curl gnupg-agent software-properties-common"
 
@@ -76,9 +38,10 @@ echo -e "Installing requirements..."
 # ========== ARM64 ========
 #upgrade to focal ubuntu 20.04
 #remove any docker container-related installations
-sudo apt-get remove docker docker-engine docker.io containerd runc
+#sudo apt-get remove docker docker-engine docker.io containerd runc
 
 sudo dpkg-reconfigure debconf --frontend=noninteractive
+
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $DEPS
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $PYTHON_DEPS
 # sudo cd /local/repository/
@@ -91,10 +54,10 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $
 #sudo tar -xzf /local/repository/source/geckodriver-v0.26.0-linux64.tar.gz -C /local/repository
 
 #ARM64
-sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
-sudo DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
-sudo sed -i 's/bionic/focal/g' /etc/apt/sources.list
-sudo apt-get update
+#sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
+#sudo DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
+#sudo sed -i 's/bionic/focal/g' /etc/apt/sources.list
+#sudo apt-get update
 
 #sudo apt-get dist-upgrade -y --no-install-recommends
 
