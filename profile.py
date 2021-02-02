@@ -59,6 +59,7 @@ end=2000
     # node.addService(pg.Execute(shell="bash", command="apt-get update && apt-get install git"))
 
 # node doh_cloudflare
+key = "doh_docker"
 kube_doh = request.RawPC(str(key))
 kube_doh.hardware_type = "m400"
 # kube_doh.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:DEB8-64-STD' #<-- does not work
