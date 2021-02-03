@@ -74,11 +74,22 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends d
 sudo curl -L "https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
-#get doh_docker image
-sudo docker pull cslev/doh_docker:latest
+#create dir /mnt to obtain more disk space
+sudo mkdir -p /mnt/extra
+
+#request more space (random around 1TB)
+sudo /usr/local/etc/emulab/mkextrafs.pl /mnt/extra
+
+# get into /mnt/extra
+sudo cd /mnt/extra
 
 #get doh_docker source for docker-compose.yaml
 sudo git clone https://github.com/cslev/doh_docker
+
+
+#get doh_docker image
+sudo docker pull cslev/doh_docker:latest
+
 
 #firefox
 #sudo wget -q http://launchpadlibrarian.net/468415450/firefox_74.0+build3-0ubuntu0.18.04.1_arm64.deb
