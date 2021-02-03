@@ -26,7 +26,7 @@ lightcyan='\033[96m'
 
 
 
-DEPS="tshark tcpdump nano tar bzip2 wget lsb-release screen procps apt-transport-https ca-certificates curl gnupg-agent software-properties-common"
+DEPS="libc6 tshark tcpdump nano tar bzip2 wget lsb-release screen procps apt-transport-https ca-certificates curl gnupg-agent software-properties-common"
 
 PYTHON_DEPS="python3 libpython3-dev"
 
@@ -77,6 +77,9 @@ sudo chmod +x /usr/local/bin/docker-compose
 #get doh_docker image
 sudo docker pull cslev/doh_docker:latest
 
+#get doh_docker source for docker-compose.yaml
+sudo git clone https://github.com/cslev/doh_docker
+
 #firefox
 #sudo wget -q http://launchpadlibrarian.net/468415450/firefox_74.0+build3-0ubuntu0.18.04.1_arm64.deb
 #sudo wget -q http://launchpadlibrarian.net/468415270/firefox-geckodriver_74.0+build3-0ubuntu0.18.04.1_arm64.deb
@@ -104,7 +107,7 @@ sudo docker pull cslev/doh_docker:latest
 #sudo mv /local/repository/source/*.csv /local/repository/
 #sudo mv /local/repository/source/r_config.json /local/repository/
 #sudo touch /etc/motd
-#sudo cp /local/repository/source/others/bashrc_template /root/.bashrc
+sudo cp /local/repository/source/others/bashrc_template /root/.bashrc
 sudo source /root/.bashrc
 sudo cp /local/repository/source/others/bashrc_template /users/cslev/.bashrc
 sudo echo "cslev   ALL= NOPASSWD:/usr/sbin/tcpdump" >> /etc/sudoers

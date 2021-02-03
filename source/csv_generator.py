@@ -9,6 +9,7 @@ import argparse
 #getting the ENV files for the SSLKEYLOG
 SSLKEY   = os.getenv('SSLKEYLOGFILE')
 SSLDEBUG = os.getenv('SSLDEBUGFILE')
+WORKDIR_PREFIX="work_dir/"
 
 # ## tshark -r capture-1-200 -Y "http2" -o tls.keylog_file:sslkey1.log -T fields -e frame.number -e _ws.col.Time -e ip.src -e ip.dst -e _ws.col.Protocol -e frame.len -e _ws.col.Info -E header=y -E separator="," -E quote=d -E occurrence=f > test1.csv
 
@@ -24,7 +25,7 @@ log_file = args.logfile[0]
 logs = open(log_file, 'a')
 
 ## here in the parameter of os.walk, specify the location of the folder containing the pcaps
-for _,_,files in os.walk("./pcap/") :
+for _,_,files in os.walk(str(WORKDIR_PREFIX)+"pcap/") :
     print(files)
 
 
@@ -34,8 +35,8 @@ print("Converting .pcap files to .csv")
 logs.write("Converting .pcap files to .csv\n")
 logs.flush()
 for f in files :
-    file_name = "./pcap/" + f ;
-    output_file_name = "csvfile-"+f.split('-')[1] + "-" + f.split('-')[2] +".csv"
+    file_name = str(WORKDIR_PREFIX)+"pcap/" + f
+    output_file_name = str(WORKDIR_PREFIX)+"csvfile-"+f.split('-')[1] + "-" + f.split('-')[2] +".csv"
     print(output_file_name)
     logs.write(str(output_file_name)+"\n")
     logs.flush()

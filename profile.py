@@ -67,9 +67,9 @@ kube_doh.hardware_type = "xl170" ##AMD64
 kube_doh.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 kube_doh.Site(str(key))
 
-    # bs0 = kube_doh.Blockstore('bs0', '/mnt/extra')
-    # bs0.size = '1GB'
-    # bs0.placement = 'NONSYSVOL'
+bs0 = kube_doh.Blockstore('bs0', '/mnt/extra')
+bs0.size = '32GB'
+bs0.placement = 'NONSYSVOL'
 
     #Start the original baremetal version
     #start doh_capture
