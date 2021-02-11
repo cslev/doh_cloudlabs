@@ -26,7 +26,7 @@ lightcyan='\033[96m'
 
 
 
-DEPS="libc6 tshark tcpdump nano tar bzip2 wget lsb-release screen procps apt-transport-https ca-certificates curl gnupg-agent software-properties-common"
+DEPS="libc6 tshark tcpdump nano tar bzip2 wget lsb-release screen procps apt-transport-https ca-certificates curl gnupg-agent software-properties-common mc git"
 
 PYTHON_DEPS="python3 libpython3-dev"
 
