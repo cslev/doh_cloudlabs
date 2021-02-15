@@ -59,23 +59,16 @@ end=2000
     # node.addService(pg.Execute(shell="bash", command="apt-get update && apt-get install git"))
 
 # node doh_cloudflare
-key = "doh_docker"
-kube_doh = request.RawPC(str(key))
-# kube_doh.hardware_type = "m400" ##ARM
-#kube_doh.hardware_type = "xl170" ##AMD64
-# kube_doh.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:DEB8-64-STD' #<-- does not work
-kube_doh.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-kube_doh.Site(str(key))
+for i in range(1,5):
+  key = str("doh_docker_{}".format(i))
+  kube_doh = request.RawPC(str(key))
+  #kube_doh.hardware_type = "m400" ##ARM
+  #kube_doh.hardware_type = "xl170" ##AMD64
+  #kube_doh.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:DEB8-64-STD' #<-- does not work
+  kube_doh.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
+  kube_doh.Site(str(key))
 
-# bs0 = kube_doh.Blockstore('bs0', '/mnt/extra')
-# bs0.size = '32GB'
-# bs0.placement = 'NONSYSVOL'
-
-    #Start the original baremetal version
-    #start doh_capture
-    #kube_doh.addService(pg.Execute(shell="bash", command="/local/repository/cloudlabs_start.sh -r "+str(doh_resolvers[key])+" -s "+str(start)+" -e "+str(end)))
-    
-#START the docker-based version
-kube_doh.addService(pg.Execute(shell="bash", command="/local/repository/cloudlabs_start_docker.sh"))
+  #START the docker-based version
+  kube_doh.addService(pg.Execute(shell="bash", command="/local/repository/cloudlabs_start_docker.sh"))
 
 portal.context.printRequestRSpec()
