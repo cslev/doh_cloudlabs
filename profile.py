@@ -62,7 +62,7 @@ end=2000
 for i in range(1,5):
   key = str("doh_docker_{}".format(i))
   kube_doh = request.RawPC(str(key))
-  #kube_doh.hardware_type = "m400" ##ARM
+  kube_doh.hardware_type = "m400" ##ARM
   #kube_doh.hardware_type = "xl170" ##AMD64
   #kube_doh.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:DEB8-64-STD' #<-- does not work
   kube_doh.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
