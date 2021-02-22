@@ -71,15 +71,23 @@ sudo add-apt-repository \
 sudo apt-get update
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends docker-ce docker-ce-cli containerd.io
 
-#installing docker-compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-
 #create dir /mnt to obtain more disk space
 sudo mkdir -p /mnt/extra
 
-#request more space (random around 1TB)
-sudo /usr/local/etc/emulab/mkextrafs.pl /mnt/extra
+if "$arch" == "arm64"
+then
+  sudo apt-get install docker-compose
+  sudo ln -s /usr/bin/docker-compose  /usr/local/bin/docker-compose
+  #there is no extra TB storage for ARMs, but we still work in /mnt/extra
+else
+  #installing docker-compose
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
+
+  #request more space (random around 1TB)
+  sudo /usr/local/etc/emulab/mkextrafs.pl /mnt/extra
+fi
+
 
 # get into /mnt/extra
 sudo cd /mnt/extra
