@@ -59,7 +59,7 @@ end=2000
     # node.addService(pg.Execute(shell="bash", command="apt-get update && apt-get install git"))
 
 # node doh_cloudflare
-for i in range(1,5):
+for i in range(1,3):
   key = str("doh_docker_{}".format(i))
   kube_doh = request.RawPC(str(key))
   kube_doh.hardware_type = "m400" ##ARM
