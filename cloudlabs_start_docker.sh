@@ -25,41 +25,21 @@ pink='\033[95m'
 lightcyan='\033[96m'
 
 
+USERNAME="csikorl"
 
-DEPS="libc6 tshark tcpdump nano tar bzip2 wget lsb-release screen procps apt-transport-https ca-certificates curl gnupg-agent software-properties-common mc git"
+DEPS="libc6 tshark tcpdump nano tar bzip2 wget lsb-release screen procps apt-transport-https ca-certificates curl gnupg-agent software-properties-common mc git ethtool"
 
 PYTHON_DEPS="python3 libpython3-dev"
 
 sudo echo -e "\n\n${reverse}${red}Installing is still in progess...!${disable}${none}" | sudo tee /etc/motd
 
 echo -e "Installing requirements..."
-# sudo add-apt-repository ppa:wireshark-dev/stable -y
-# sudo apt-get update
-# ========== ARM64 ========
-#upgrade to focal ubuntu 20.04
-#remove any docker container-related installations
-#sudo apt-get remove docker docker-engine docker.io containerd runc
+
 
 sudo dpkg-reconfigure debconf --frontend=noninteractive
 
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $DEPS
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $PYTHON_DEPS
-# sudo cd /local/repository/
-#sudo dpkg -i /local/repository/source/selenium/python3-urllib3_1.24.1.deb
-#sudo dpkg -i /local/repository/source/selenium/python3-selenium_3.14.1.deb
-#sudo apt-get autoremove --purge -y
-#x86_64
-#sudo wget -q https://ftp.mozilla.org/pub/firefox/releases/74.0/linux-x86_64/en-US/firefox-74.0.tar.bz2
-#sudo tar -xjf firefox-74.0.tar.bz2 -C /local/repository
-#sudo tar -xzf /local/repository/source/geckodriver-v0.26.0-linux64.tar.gz -C /local/repository
-
-#ARM64
-#sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
-#sudo DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
-#sudo sed -i 's/bionic/focal/g' /etc/apt/sources.list
-#sudo apt-get update
-
-#sudo apt-get dist-upgrade -y --no-install-recommends
 
 #installing docker
 arch=$(dpkg -l |grep linux-image-generic|awk '{print $4}')
@@ -74,14 +54,14 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends d
 #create dir /mnt to obtain more disk space
 sudo mkdir -p /mnt/extra
 
-if "$arch" == "arm64"
+if [ "$arch" == "arm64" ] 
 then
-  sudo apt-get install docker-compose
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y docker-compose
   sudo ln -s /usr/bin/docker-compose  /usr/local/bin/docker-compose
   #there is no extra TB storage for ARMs, but we still work in /mnt/extra
 else
   #installing docker-compose
-  sudo curl -L "https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
   sudo chmod +x /usr/local/bin/docker-compose
 
   #request more space (random around 1TB)
@@ -90,47 +70,22 @@ fi
 
 
 # get into /mnt/extra
-sudo cd /mnt/extra
+cd /mnt/extra
 
 #get doh_docker source for docker-compose.yaml
-sudo git clone https://github.com/cslev/doh_docker
+sudo git clone https://github.com/cslev/quic_doh_docker
+
+#build container
+#sudo docker build -t cslev/doh_docker:arm64v8 -f Dockerfile.arm64 .
 
 
 #get doh_docker image
-sudo docker pull cslev/doh_docker:latest
+sudo docker pull cslev/quic_doh_docker:latest
 
-
-#firefox
-#sudo wget -q http://launchpadlibrarian.net/468415450/firefox_74.0+build3-0ubuntu0.18.04.1_arm64.deb
-#sudo wget -q http://launchpadlibrarian.net/468415270/firefox-geckodriver_74.0+build3-0ubuntu0.18.04.1_arm64.deb
-#sudo dpkg -i firefox_74.0+build3-0ubuntu0.18.04.1_arm64.deb
-#sudo dpkg -i firefox-geckodriver_74.0+build3-0ubuntu0.18.04.1_arm64.deb
-#sudo ln -s `which geckodriver` /local/repository/geckodriver
-
-#========== ARM64 END =================
-
-#sudo rm -rf /var/lib/apt/lists/*
-# sudo rm -rf selenium/
-# sudo rm -rf firefox-74.0.tar.bz2
-# sudo rm -rf geckodriver-v0.26.0-linux64.tar.gz
-#sudo chmod +x /local/repository/geckodriver
-#sudo chmod +x /local/repository/source/doh_capture.py
-#sudo chmod +x /local/repository/source/start_doh_capture.sh
-#sudo cp /local/repository/geckodriver /usr/bin
-# sudo rm -rf /usr/lib/firefox
-#sudo mkdir -p /usr/lib/firefox
-# sudo ln -s /local/repository/firefox/firefox /usr/lib/firefox/firefox
-#sudo mv /local/repository/source/*.py /local/repository/
-#sudo mkdir -p /local/repository/pcap
-#sudo mkdir -p /local/repository/csv
-#sudo mv /local/repository/source/*.sh /local/repository/
-#sudo mv /local/repository/source/*.csv /local/repository/
-#sudo mv /local/repository/source/r_config.json /local/repository/
-#sudo touch /etc/motd
 sudo cp /local/repository/source/others/bashrc_template /root/.bashrc
 sudo source /root/.bashrc
-sudo cp /local/repository/source/others/bashrc_template /users/cslev/.bashrc
-sudo echo "cslev   ALL= NOPASSWD:/usr/sbin/tcpdump" >> /etc/sudoers
+sudo cp /local/repository/source/others/bashrc_template /users/$USERNAME/.bashrc
+sudo echo "${USERNAME}   ALL= NOPASSWD:/usr/sbin/tcpdump" >> /etc/sudoers
 sudo apt-get install -f -y
 sudo apt-get autoremove -y
 
@@ -139,3 +94,5 @@ sudo apt-get autoremove -y
 # sudo echo -e "\n\n${reverse}${red}mv /local/repository/others/bashrc_template /root/.bashrc!${disable}${none}" | sudo tee  /etc/motd
 # sudo echo -e "\n\n${reverse}${red}. /root/.bashrc!${disable}${none}" | sudo tee -a /etc/motd
 sudo echo -e "\n\n${reverse}${green}Installation finished\n\$PATH=${PATH}!${disable}${none}" | sudo tee /etc/motd
+
+

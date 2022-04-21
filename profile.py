@@ -38,15 +38,6 @@ tour.Instructions(IG.Tour.MARKDOWN,kube_instruction)
 request.addTour(tour)
 
 
-doh_resolvers = {'cloudflare':1,
-                 'google':2,
-                 'cleanbrowsing':3,
-                 'quad9':4}
-
-# doh_resolvers={'cloudflare':1}
-start=1
-end=2000
-
 #for key in doh_resolvers:
     # node = request.DockerContainer(str(key))
     # node.docker_dockerfile = "https://raw.githubusercontent.com/cslev/doh_docker/master/Dockerfile.noautostart"
